@@ -20,7 +20,10 @@ function draw() {
     food()
     snake()
 }
-
+/**
+ * Generates a random coordinate on the grid
+ * @returns a coordinate
+ */
 function newFoodCoordinate() {
     let numberOfCells = 600/GRID_SIZE;
     randomCell = random(numberOfCells);
@@ -60,8 +63,14 @@ function snake() {
         headY = headY + DirY
     }
 }
-
+/**
+ * Draws food and if eaten, moves food
+*/
 function food() {
     fill(200,0,0)
     circle(foodX,foodY,GRID_SIZE)
+    if (headX === foodX - 10 && headY === foodY - 10) {
+        foodY = newFoodCoordinate();
+        foodX = newFoodCoordinate();  
+    }
 }
