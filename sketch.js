@@ -1,9 +1,6 @@
 const GRID_SIZE = 20;
-let numberOfCells = 600/GRID_SIZE;
-let randomCellx;
-let randomCelly;
-let randomCellFloorx;
-let randomCellFloory;
+let randomCell;
+let randomCellFloor;
 let foodX;
 let foodY;
 let headX = 20;
@@ -14,31 +11,21 @@ let DirY = 0
 function setup() {
     createCanvas(600,600);
     frameRate(5);
-    randomCellx = random(numberOfCells);
-    randomCellFloorx = floor(randomCellx);
-    randomCelly = random(numberOfCells);
-    randomCellFloory = floor(randomCelly);
-    foodY = randomCellFloory * GRID_SIZE + GRID_SIZE / 2;
-    foodX = randomCellFloorx * GRID_SIZE + GRID_SIZE / 2;
+    foodY = newFoodCoordinate();
+    foodX = newFoodCoordinate();
 }
-
-
 
 function draw() {
     background(255)
-    fill(200,0,0)
-    circle(foodX,foodY,GRID_SIZE)
-    if (headX > 560 || headX < 20 || headY > 560 || headY < 40) {
-        fill(0,200,0);
-        square(headX,headY,GRID_SIZE)
-        headX = headX
-        headY = headY
-    } else {
-        fill(0,200,0);
-        square(headX,headY,GRID_SIZE)
-        headX = headX + DirX
-        headY = headY + DirY
-    }
+    food()
+    snake()
+}
+
+function newFoodCoordinate() {
+    let numberOfCells = 600/GRID_SIZE;
+    randomCell = random(numberOfCells);
+    randomCellFloor = floor(randomCell);
+    return randomCellFloor * GRID_SIZE + GRID_SIZE / 2;
 }
 
 function keyPressed() {
@@ -58,4 +45,23 @@ function keyPressed() {
         DirY = 0
         DirX = 20
     }
+}
+
+function snake() {
+    if (headX > 560 || headX < 20 || headY > 560 || headY <= 0) {
+        fill(0,200,0);
+        square(headX,headY,GRID_SIZE)
+        headX = headX
+        headY = headY
+    } else {
+        fill(0,200,0);
+        square(headX,headY,GRID_SIZE)
+        headX = headX + DirX
+        headY = headY + DirY
+    }
+}
+
+function food() {
+    fill(200,0,0)
+    circle(foodX,foodY,GRID_SIZE)
 }
